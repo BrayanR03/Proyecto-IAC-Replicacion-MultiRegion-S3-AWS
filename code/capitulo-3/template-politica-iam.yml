@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Politica IAM - Replicacion S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Replicacion S3 - MultiRegion
+
+Parameters:
+  ManagedPolicyNameParameter:
+    Type: String
+    Description: Nombre de la politica IAM personalizada para replicacion S3
+    Default: politica-iam-example
+
+  NombreBucketOrigenParameter:
+    Type: String
+    Description: Nombre del bucket de origen para la replicacion S3
+    Default: bucket-origen-nombre
+
+  NombreBucketDestinoParameter:
+    Type: String
+    Description: Nombre del bucket de destino para la replicacion S3
+    Default: bucket-destino-nombre
+
+Resources:
+  PoliticaPersonalizadaReplicacionS3:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Sid: Regla1BucketOrigen
+            Effect: Allow
+            Action:
+              - s3:GetReplicationConfiguration
+              - s3:ListBucket
+            Resource: !Sub arn:aws:s3:::${NombreBucketOrigenParameter}
+
+          - Sid: Regla2BucketOrigen
+            Effect: Allow
+            Action:
+              - s3:GetObjectVersionForReplication
+              - s3:GetObjectVersionAcl
+              - s3:GetObjectVersionTagging
+            Resource: !Sub arn:aws:s3:::${NombreBucketOrigenParameter}/*
+
+          - Sid: Regla1BucketDestino
+            Effect: Allow
+            Action:
+              - s3:ReplicateObject
+              - s3:ReplicateDelete
+              - s3:ReplicateTags
+            Resource: !Sub arn:aws:s3:::${NombreBucketDestinoParameter}/*
+      ManagedPolicyName: !Ref ManagedPolicyNameParameter
+
+Outputs:
+  ManagedPolicyName:
+    Value: !Ref PoliticaPersonalizadaReplicacionS3

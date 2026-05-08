@@ -1,0 +1,99 @@
+# 🚀 IaC en AWS: Replicación Multi-Regional en S3 sin odiar CloudFormation
+
+Este repositorio documenta mi proceso de aprendizaje en **Infraestructura como Código (IaC)** utilizando AWS, enfocado en un caso práctico:  
+
+👉 **Replicación Multi-Regional en S3 usando CloudFormation**
+
+Más que solo implementar la solución, este proyecto está organizado como una serie de **capítulos**, donde cada uno introduce una nueva idea, concepto o reto dentro del mundo de IaC.
+
+---
+
+## 📌 Objetivo del proyecto
+
+Construir paso a paso una arquitectura en AWS que permita:
+
+- Automatizar todo usando CloudFormation:
+    - Gestionar permisos con IAM
+    - Crear buckets en S3
+    - Configurar versionado
+    - Implementar replicación entre buckets
+
+Todo esto aplicando buenas prácticas de **Infraestructura como Código**.
+
+---
+
+## 🧠 ¿Por qué este proyecto?
+
+Cuando empiezas en IaC, lo más difícil no es escribir código…  
+es **entender cómo pensar la infraestructura como código**.
+
+Este proyecto busca:
+
+- Pasar de clics en consola → a código reutilizable
+- Entender conceptos clave de AWS desde la práctica
+- Perder el miedo a CloudFormation
+
+---
+
+## 🏗️ Stack tecnológico
+
+- **AWS CloudFormation** → Definición de infraestructura
+- **Amazon S3** → Almacenamiento y replicación
+- **IAM** → Gestión de permisos
+- YAML → Definición de templates
+
+---
+
+## 📚 Estructura del aprendizaje (Capítulos)
+
+Cada capítulo introduce una nueva idea dentro de IaC:
+
+---
+
+## 🧭 Tabla de Contenido
+
+| Capítulo | Tema | Estado | Publicación |
+|-----------|------|--------|--------------|
+| 01 | Cómo empezar en IaC (AWS) sin odiar IaC y AWS | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-1-c%C3%B3mo-empezar-en-iac-aws-sin-odiar-iac-y-aws) · [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7456492199430492160/) |
+| 02 | El template, la base para desplegar infraestructura en AWS (sin escribir código aún) | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-2-el-template-la-base-para-desplegar-infraestructura-en-aws-sin-escribir-c%C3%B3digo-a%C3%BAn) · [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7457599609209716737/) |
+| 03 | Introducción a Docker | ✅ Completado | [Leer en Wix]() · [LinkedIn]() |
+---
+
+
+## 📂 Estructura del repositorio (ejemplo)
+
+```CSS
+PROYECTO-IAC-REPLICACION-S3/
+│
+├── 💻 code/
+│ ├── template.md
+│ └── ...
+│
+├── 💻 documentation/
+│ ├── capitulo-1.md/
+│ └── ...
+│
+└── 📘 README.md
+```
+---
+
+## 🧑‍💻 Sobre Mí
+
+Brayan Neciosup Bolaños - Data & Cloud Engineer Jr.
+
+Actualmente explorando **Infraestructura como Código** y su potencial para el despliegue de recursos en AWS.
+
+📫 **Contacto**  
+- 🌐 Portafolio: [Portafolio_WIX](https://bryanneciosup626.wixsite.com/brayandataanalitics)  
+- 💼 LinkedIn: [linkedin.com/in/brayanneciosup](https://www.linkedin.com/in/brayan-rafael-neciosup-bola%C3%B1os-407a59246/)  
+- 🧠 GitHub: [github.com/brayanneciosup](https://github.com/BrayanR03)  
+- ✉️ Email: [bryanneciosup626@gmail.com](bryanneciosup626@gmail.com)
+
+---
+
+## 📌 Notas Finales
+Este repositorio forma parte de mi **iniciativa personal de documentación técnica**, donde registro mi aprendizaje en distintas tecnologías mediante publicaciones teóricas, ejemplos prácticos y reflexiones profesionales.
+
+> 🎯 *Objetivo final:* consolidar conocimientos, compartir aprendizajes, fortalecer mi presencia técnica y docente en la comunidad.
+
+---
