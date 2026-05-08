@@ -56,7 +56,7 @@ Cada capítulo introduce una nueva idea dentro de IaC:
 |-----------|------|--------|--------------|
 | 01 | Cómo empezar en IaC (AWS) sin odiar IaC y AWS | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-1-c%C3%B3mo-empezar-en-iac-aws-sin-odiar-iac-y-aws) · [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7456492199430492160/) |
 | 02 | El template, la base para desplegar infraestructura en AWS (sin escribir código aún) | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-2-el-template-la-base-para-desplegar-infraestructura-en-aws-sin-escribir-c%C3%B3digo-a%C3%BAn) · [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7457599609209716737/) |
-| 03 | Escribiendo el Primer Template (IAM Policy) | ✅ Completado | [Leer en Wix]() · [LinkedIn]() |
+| 03 | Escribiendo el Primer Template (IAM Policy) | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-3-escribiendo-el-primer-template-iam-policy) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-3-escribiendo-el-primer-template-activity-7458521183920062465-O0AZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
 ---
 
 
