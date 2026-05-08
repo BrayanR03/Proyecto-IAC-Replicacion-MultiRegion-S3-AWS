@@ -1,10 +1,11 @@
-# 📖 Capítulo 3: Escribiendo el primer template (IAM - Política)
+# 📖 Capítulo 3: Escribiendo el Primer Template (IAM Policy)
 
 En este capítulo, vamos a dar el siguiente paso:
 
-👉 **Escribir nuestro primer template real en CloudFormation**
+👉 **Escribir nuestro primer template real**
 
-Trabajaremos con un componente del servicio de **IAM**, específicamente:
+Trabajaremos con un componente del servicio de **IAM**, específicamente
+para el desarrollo del proyecto:
 
 🔥 **Una política (IAM Policy)**
 
@@ -12,10 +13,10 @@ Trabajaremos con un componente del servicio de **IAM**, específicamente:
 
 ## 🧱 Estructura de un Template
 
-Para definir un template en CloudFormation, debemos conocer que existen:
+Para definir un template, debemos conocer que existen:
 
-- 🔹 Secciones opcionales
-- 🔹 Secciones obligatorias
+- Secciones opcionales
+- Secciones obligatorias
 
 ---
 
@@ -25,7 +26,7 @@ Estas secciones no son obligatorias, pero ayudan muchísimo a documentar.
 
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Descripción del template (objetivo del recurso)
+Description: Descripción del template
 Metadata:
   Author: Tu nombre
   Proyecto: Nombre del proyecto
@@ -59,14 +60,17 @@ Aquí definimos valores dinámicos.
 ```yml
 Parameters:
   NombreParametroParameter:
-    Type: String
-    Description: Qué valor se espera
-    Default: Valor por defecto
+    Type: String | Number | List | Mayormente se utiliza String
+    Description: Descripción del parámetro
+    Default: Valor por defecto del parámetro
 ```
 #### 💡 Buenas prácticas
 * Usar sufijo Parameter
 * Definir siempre Description
-* Usar Default cuando sea posible
+* Usar Default para el despliegue automatizado de los templates
+
+Puedes revisar la siguiente imagen: [Parametros (Template y CloudFormation)](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/tree/main/assets/Parametros-TemplateCloudFormation.png)
+
 ---
 #### 🧠 ¿Qué hace esto?
 
@@ -93,7 +97,7 @@ Resources:
 * No necesitas memorizar esto
 * AWS ya te da plantillas base
 
-* 👉 Solo debes:
+* 👉 Solo debes buscar "aws <recurso_servicio> cloudformation" en tu navegador preferido y luego:
 
     * Copiar
     * Adaptar
@@ -142,9 +146,9 @@ Practica creando templates simples:
 
 En este caso, el primer template desarrollado corresponde a una **política IAM**, la cual será clave para definir los permisos que utilizará el rol (que veremos más adelante) para ejecutar correctamente la **replicación multi-regional en S3**.
 
-Este template representa el primer paso dentro de la construcción de nuestra infraestructura como código, ya que en AWS **todo acceso entre servicios se basa en permisos bien definidos**.
+Este template representa el primer paso dentro de la construcción de nuestra infraestructura como código, debido que en AWS **todo acceso entre servicios se basa en permisos bien definidos**.
 
-🔗 GitHub: [Template-PoliticaIAM-Replicacion](#)
+🔗 GitHub: [Template-PoliticaIAM-Replicacion](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/blob/main/code/capitulo-3/template-politica-iam.yml)
 
 ---
 

@@ -1,30 +1,50 @@
+## ==============================================================
+## SECCIONES OPCIONALES (✅ RECOMENDADO PARA DOCUMENTACION)
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Politica IAM - Replicacion S3
 Metadata:
   Author: Brayan Neciosup
   Proyecto: Replicacion S3 - MultiRegion
+## ==============================================================
 
+
+## ==============================================================
+## SECCIONES OBLIGATORIAS (✅ REQUERIDO PARA LA CREACION DEL TEMPLATE)
+
+## ============PARÁMETROS DEL TEMPLATE=======================================
+###💡 REQUERIDO SI SE DESEA PARAMETRIZAR EL TEMPLATE
 Parameters:
   ManagedPolicyNameParameter:
     Type: String
     Description: Nombre de la politica IAM personalizada para replicacion S3
-    Default: politica-iam-example
+    Default: PoliticaPersonalizada-ReplicacionS3-CF
 
   NombreBucketOrigenParameter:
     Type: String
     Description: Nombre del bucket de origen para la replicacion S3
-    Default: bucket-origen-nombre
+    Default: bucket-brayan-origen-replicacion-cf
 
   NombreBucketDestinoParameter:
     Type: String
     Description: Nombre del bucket de destino para la replicacion S3
-    Default: bucket-destino-nombre
+    Default: bucket-brayan-destino-replicacion-cf
 
+### 💡 EN ESTE CASO, ESTABLECEMOS LOS VALORES REALES EN LA PROPIEDAD "Default". 
+## ==============================================================
+
+
+## ============RECURSOS DEL TEMPLATE=======================================
+###💡 REQUERIDO PARA LA CREACION DE LOS RECURSOS DE CADA SERVICIO EN AWS (POLITICA IAM EN ESTE TEMPLATE)
 Resources:
-  PoliticaPersonalizadaReplicacionS3:
-    Type: AWS::IAM::ManagedPolicy
-    Properties:
-      PolicyDocument: 
+  PoliticaPersonalizadaReplicacionS3: ## 💡 NOMBRE LOGICO DEL RECURSO (SIN ESPACIOS NI CARACTERES ESPECIALES)
+  
+  ## 💡 EN ESTE CASO, BUSCAMOS "aws iam policy cloudformation" en google.
+
+    Type: AWS::IAM::ManagedPolicy ## 💡 TIPO DE RECURSO (CONSULTAR DOCUMENTACION DE AWS PARA CADA SERVICIO)
+    Properties: ## 💡 PROPIEDADES DEL RECURSO (CONSULTAR DOCUMENTACION DE AWS PARA CADA SERVICIO)
+      Description: Politica IAM personalizada para replicacion S3 entre regiones ## 💡 DESCRIPCION DEL RECURSO (OPCIONAL PERO RECOMENDADO)
+      Path: / ## 💡 RUTA DE LA POLITICA (OPCIONAL, PERO RECOMENDADO PARA ORGANIZAR LAS POLITICAS EN IAM)
+      PolicyDocument: ## 💡 DOCUMENTO DE LA POLITICA EN FORMATO JSON (EN ESTE CASO, EL JSON LO FORMATEAMOS A UN YAML)
         Version: "2012-10-17"
         Statement:
           - Sid: Regla1BucketOrigen
@@ -32,7 +52,7 @@ Resources:
             Action:
               - s3:GetReplicationConfiguration
               - s3:ListBucket
-            Resource: !Sub arn:aws:s3:::${NombreBucketOrigenParameter}
+            Resource: !Sub arn:aws:s3:::${NombreBucketOrigenParameter} ## !Sub ➡️ PERMITE ACOPLAR VALORES DE PARAMETROS EN STRINGS. 
 
           - Sid: Regla2BucketOrigen
             Effect: Allow
@@ -40,7 +60,7 @@ Resources:
               - s3:GetObjectVersionForReplication
               - s3:GetObjectVersionAcl
               - s3:GetObjectVersionTagging
-            Resource: !Sub arn:aws:s3:::${NombreBucketOrigenParameter}/*
+            Resource: !Sub arn:aws:s3:::${NombreBucketOrigenParameter}/* ## !Sub ➡️ PERMITE ACOPLAR VALORES DE PARAMETROS EN STRINGS.
 
           - Sid: Regla1BucketDestino
             Effect: Allow
@@ -48,9 +68,15 @@ Resources:
               - s3:ReplicateObject
               - s3:ReplicateDelete
               - s3:ReplicateTags
-            Resource: !Sub arn:aws:s3:::${NombreBucketDestinoParameter}/*
-      ManagedPolicyName: !Ref ManagedPolicyNameParameter
+            Resource: !Sub arn:aws:s3:::${NombreBucketDestinoParameter}/* ## !Sub ➡️ PERMITE ACOPLAR VALORES DE PARAMETROS EN STRINGS.
+      ManagedPolicyName: !Ref ManagedPolicyNameParameter ## !Ref ➡️ PERMITE REFERENCIAR EL VALOR DE UN PARAMETRO DEFINIDO EN LA SECCION "Parameters".
 
-Outputs:
-  ManagedPolicyName:
-    Value: !Ref PoliticaPersonalizadaReplicacionS3
+## 💡 EN ESTE CASO, DEFINIMOS UNA POLITICA IAM PERSONALIZADA (ManagedPolicy) PARA LA REPLICACION DE OBJETOS S3 ENTRE REGIONES.
+## 💡 VERIFICAR CORRECTAMENTE LA IDENTACIÓN EN CADA PROPIEDAD, SECCIÓN DEL TEMPLATE. 
+## ==============================================================
+
+## ============OUTPUTS DEL TEMPLATE=======================================
+Outputs: ## 💡 REQUERIDO SI SE DESEA MOSTRAR INFORMACION RELEVANTE AL USUARIO DESPUES DE LA CREACION DEL STACK (VEREMOS MAS ADELANTE)
+  ManagedPolicyName: ## 💡 NOMBRE LOGICO DEL OUTPUT (SIN ESPACIOS NI CARACTERES ESPECIALES)
+    Value: !Ref PoliticaPersonalizadaReplicacionS3 ## !Ref ➡️ PERMITE REFERENCIAR EL VALOR DE UN RECURSO DEFINIDO EN LA SECCION "Resources".
+## =============================================================

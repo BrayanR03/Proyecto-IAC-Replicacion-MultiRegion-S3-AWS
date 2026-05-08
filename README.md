@@ -56,7 +56,7 @@ Cada capítulo introduce una nueva idea dentro de IaC:
 |-----------|------|--------|--------------|
 | 01 | Cómo empezar en IaC (AWS) sin odiar IaC y AWS | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-1-c%C3%B3mo-empezar-en-iac-aws-sin-odiar-iac-y-aws) · [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7456492199430492160/) |
 | 02 | El template, la base para desplegar infraestructura en AWS (sin escribir código aún) | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-2-el-template-la-base-para-desplegar-infraestructura-en-aws-sin-escribir-c%C3%B3digo-a%C3%BAn) · [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7457599609209716737/) |
-| 03 | Introducción a Docker | ✅ Completado | [Leer en Wix]() · [LinkedIn]() |
+| 03 | Escribiendo el Primer Template (IAM Policy) | ✅ Completado | [Leer en Wix]() · [LinkedIn]() |
 ---
 
 
@@ -65,6 +65,7 @@ Cada capítulo introduce una nueva idea dentro de IaC:
 ```CSS
 PROYECTO-IAC-REPLICACION-S3/
 │
+├── 📷 assets/
 ├── 💻 code/
 │ ├── template.md
 │ └── ...
