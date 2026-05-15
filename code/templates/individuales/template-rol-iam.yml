@@ -1,0 +1,59 @@
+## ==============================================================
+## SECCIONES OPCIONALES (✅ RECOMENDADO PARA DOCUMENTACION)
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Rol IAM - Replicacion S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Replicacion S3 - MultiRegion
+## ==============================================================
+
+## ==============================================================
+## SECCIONES OBLIGATORIAS (✅ REQUERIDO PARA LA CREACION DEL TEMPLATE)
+
+## ============PARÁMETROS DEL TEMPLATE=======================================
+###💡 REQUERIDO SI SE DESEA PARAMETRIZAR EL TEMPLATE
+Parameters:
+  RoleNameParameter:
+    Type: String
+    Description: Nombre del rol IAM personalizado para replicacion S3
+    Default: RolPersonalizado-ReplicacionS3-CF
+  ManagedPolicyArnsParameter:
+    Type: String
+    Description: ARNs de las políticas gestionadas para el rol IAM
+    Default: arn:aws:iam::765951922888:policy/PoliticaPersonalizada-ReplicacionS3-CF
+### 💡 EN ESTE CASO, ESTABLECEMOS LOS VALORES REALES EN LA PROPIEDAD "Default"
+## # ==============================================================
+
+
+## ============RECURSOS DEL TEMPLATE=======================================
+###💡 REQUERIDO PARA LA CREACION DE LOS RECURSOS DE CADA SERVICIO EN AWS (ROL IAM EN ESTE TEMPLATE)
+Resources:
+  RolIAMReplicacionS3: ## 💡 NOMBRE LOGICO DEL RECURSO (SIN ESPACIOS NI CARACTERES ESPECIALES)
+
+  ## 💡 EN ESTE CASO, BUSCAMOS "aws iam role cloudformation" en google.
+
+    Type: AWS::IAM::Role ## 💡 TIPO DE RECURSO (CONSULTAR DOCUMENTACION DE AWS PARA CADA SERVICIO )
+    Properties: ## 💡 PROPIEDADES DEL RECURSO (CONSULTAR DOCUMENTACION DE AWS PARA CADA SERVICIO)
+      AssumeRolePolicyDocument: ## 💡 PERMITE ESTABLECER QUE EL ROL A CREAR SERÁ UTILIZADO POR S3
+        Version: "2012-10-17" ## 💡 VERSION DEL DOCUMENTO DE LA POLITICA DE ASUNCION DE ROL (ESTE VALOR ES ESTANDAR PARA ESTE TIPO DE POLITICAS)
+        Statement: ## 💡 DECLARACION DE LAS REGLAS DE ASUNCION DEL ROL
+          - Effect: Allow ## 💡 EFECTO DE LA REGLA (ALLOW O DENY)
+            Principal: ## 💡 PRINCIPAL QUE PODRÁ ASUMIR EL ROL (EN ESTE CASO, S3)
+              Service: s3.amazonaws.com ## 💡 SERVICIO DE AWS QUE PODRÁ ASUMIR EL ROL (EN ESTE CASO, S3)
+            Action: sts:AssumeRole ## 💡 ACCION QUE PERMITE ASUMIR EL ROL (EN ESTE CASO, sts:AssumeRole ES LA ACCION ESTANDAR PARA LAS POLITICAS DE ASUNCION DE ROL)
+      Description: Rol para S3 - Replicacion MultiRegion ## 💡 DESCRIPCION DEL RECURSO (OPCIONAL PERO RECOMENDADO)
+      ManagedPolicyArns: ## 💡 ARNS DE LAS POLITICAS GESTIONADAS QUE SE ASOCIARAN AL ROL.
+        - !Ref ManagedPolicyArnsParameter ## !Ref ➡️ PERMITE REFERENCIAR EL VALOR DE UN PARAMETRO DEFINIDO EN LA SECCION DE PARAMETROS.
+      MaxSessionDuration: 3600 ## 💡 DURACION MAXIMA DE LA SESION EN SEGUNDOS (OPCIONAL, PERO RECOMENDADO PARA CONTROLAR EL TIEMPO DE ASUNCION DEL ROL)
+      Path: / ## 💡 RUTA DEL ROL (OPCIONAL, PERO RECOMENDADO PARA ORGANIZAR LOS ROLES EN IAM)
+      RoleName: !Ref RoleNameParameter ## !Ref ➡️ PERMITE REFERENCIAR EL VALOR DE UN PARAMETRO DEFINIDO EN LA SECCION DE PARAMETROS.
+
+## 💡 EN ESTE CASO, DEFINIMOS EL ROL DE IAM PARA LA REPLICACIÓN DE OBJETOS S3 ENTRE REGIONES
+## 💡 VERIFICAR CORRECTAMENTE LA IDENTACIÓN EN CADA PROPIEDAD, SECCIÓN DEL TEMPLATE. 
+## ==============================================================
+
+## ============================OUTPUTS DEL TEMPLATE=======================================
+Outputs: ## 💡 REQUERIDO SI SE DESEA MOSTRAR INFORMACION RELEVANTE AL USUARIO DESPUES DE LA CREACION DEL STACK (VEREMOS MAS ADELANTE)
+  RoleName: ## 💡 NOMBRE LOGICO DEL OUTPUT (SIN ESPACIOS NI CARACTERES ESPECIALES)
+    Value: !Ref RolIAMReplicacionS3 ## !Ref ➡️ PERMITE REFERENCIAR EL VALOR DE UN RECURSO DEFINIDO EN LA SECCION DE "Resources"
+## ===============================================================

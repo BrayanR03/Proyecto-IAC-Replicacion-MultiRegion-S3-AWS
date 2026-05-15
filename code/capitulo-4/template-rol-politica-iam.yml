@@ -1,0 +1,106 @@
+## ==============================================================
+## SECCIONES OPCIONALES (✅ RECOMENDADO PARA DOCUMENTACION)
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para IAM (Politica y Rol) - Replicacion S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Replicacion S3 - MultiRegion
+## ==============================================================
+
+## ==============================================================
+## SECCIONES OBLIGATORIAS (✅ REQUERIDO PARA LA CREACION DEL TEMPLATE)
+
+## ============PARÁMETROS DEL TEMPLATE=======================================
+###💡 REQUERIDO SI SE DESEA PARAMETRIZAR EL TEMPLATE
+Parameters:
+  
+  BucketNameOrigenParameter:
+    Type: String
+    Default: bucket-brayan-origen-replicacion-cf
+  
+  BucketNameDestinoParameter:
+    Type: String
+    Default: bucket-brayan-destino-replicacion-cf
+  
+  ManagedPolicyNameParameter:
+    Type: String
+    Description: Nombre de la politica IAM personalizada para replicacion S3
+    Default: PoliticaPersonalizada-ReplicacionS3-CF
+  
+  RoleNameParameter:
+    Type: String
+    Description: Nombre del rol IAM personalizado para replicacion S3
+    Default: RolPersonalizado-ReplicacionS3-CF
+
+
+### 💡 EN ESTE CASO, ESTABLECEMOS LOS VALORES REALES EN LA PROPIEDAD "Default"
+## ==============================================================
+
+
+## ============RECURSOS DEL TEMPLATE=======================================
+###💡 REQUERIDO PARA LA CREACION DE LOS RECURSOS DE CADA SERVICIO EN AWS (POLITICA Y ROL IAM EN ESTE TEMPLATE UNIFICADO)
+### 💡 EN ESTE CASO, DEFINIMOS LA POLITICA Y EL ROL DE IAM PARA LA REPLICACIÓN DE OBJETOS S3 ENTRE REGIONES EN UN SOLO TEMPLATE UNIFICADO.
+
+Resources:
+
+## =============================================================
+## RECURSO DE LA POLITICA IAM PERSONALIZADA PARA LA REPLICACION S3.
+  PoliticaPersonalizadaReplicacionS3:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Sid: Regla1BucketOrigen
+            Effect: Allow
+            Action:
+              - s3:GetReplicationConfiguration
+              - s3:ListBucket
+            Resource: !Sub arn:aws:s3:::${BucketNameOrigenParameter}
+
+          - Sid: Regla2BucketOrigen
+            Effect: Allow
+            Action:
+              - s3:GetObjectVersionForReplication
+              - s3:GetObjectVersionAcl
+              - s3:GetObjectVersionTagging
+            Resource: !Sub arn:aws:s3:::${BucketNameOrigenParameter}/*
+
+          - Sid: Regla1BucketDestino
+            Effect: Allow
+            Action:
+              - s3:ReplicateObject
+              - s3:ReplicateDelete
+              - s3:ReplicateTags
+            Resource: !Sub arn:aws:s3:::${BucketNameDestinoParameter}/*
+      ManagedPolicyName: !Ref ManagedPolicyNameParameter
+## ==============================================================
+
+## =============================================================
+## RECURSO DEL ROL IAM PARA LA REPLICACION S3, DONDE SE ASOCIA LA POLITICA PERSONALIZADA DEFINIDA EN EL RECURSO ANTERIOR.
+  RolReplicacionS3Cloudformation:
+    Type: AWS::IAM::Role
+    DependsOn: PoliticaPersonalizadaReplicacionS3 ## 💡 DEPENDS ON ➡️ ESTABLECE DEPENDENCIA ENTRE RECURSOS. EN ESTE CASO, EL ROL DEPENDE DE LA POLITICA IAM (RECURSO ANTERIOR).
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: s3.amazonaws.com
+            Action: sts:AssumeRole
+      Description: Rol para S3 - Replicacion MultiRegion
+      ManagedPolicyArns: 
+        - !Ref PoliticaPersonalizadaReplicacionS3 ## ➡️ POR DEFECTO, EL RECURSO DEVUELVE EL ARN DE LA POLITICA IAM PERSONALIZADA (ÚTIL PARA ASOCIARLA AL ROL) 
+      MaxSessionDuration: 3600
+      Path: /
+      RoleName: !Ref RoleNameParameter
+## ==============================================================
+
+## ============================OUTPUTS DEL TEMPLATE=======================================
+Outputs:
+  RoleName:
+    Value: !GetAtt RolReplicacionS3Cloudformation.Arn
+## 💡 EN ESTE CASO, EXPORTAMOS EL ARN DEL ROL IAM (SOLO DE EJEMPLO, NO SERÁ UTILIZADO EN EL PROYECTO)
+  
+
