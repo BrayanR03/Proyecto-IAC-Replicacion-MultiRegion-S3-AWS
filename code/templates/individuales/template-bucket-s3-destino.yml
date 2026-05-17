@@ -1,0 +1,36 @@
+## ==============================================
+## SECCIONES OPCIONALES (✅ RECOMENDADO PARA DOCUMENTACION)
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para S3 (Bucket destino) - Replicacion S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Replicacion S3 - MultiRegion
+## ==============================================================
+
+
+## ==============================================================
+## SECCIONES OBLIGATORIAS (✅ REQUERIDO PARA LA CREACION DEL TEMPLATE)
+## 💡 REQUERIDO SI SE DESEA PARAMETRIZAR EL TEMPLATE
+Parameters:
+
+  BucketNameDestinoParameter:
+    Type: String
+    Default: bucket-brayan-destino-replicacion-cf
+
+### 💡 EN ESTE CASO, ESTABLECEMOS LOS VALORES REALES EN LA PROPIEDAD "Default"
+## ==============================================================
+
+
+## ============RECURSOS DEL TEMPLATE=======================================
+###💡 REQUERIDO PARA LA CREACION DE LOS RECURSOS DE CADA SERVICIO EN AWS (BUCKET S3 EN ESTE TEMPLATE)
+Resources:
+  BucketDestinoReplicacionS3: ## RECURSO DEL BUCKET S3 DE DESTINO PARA LA REPLICACION S3 ENTRE REGIONES.
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketNameDestinoParameter ## NOMBRE DEL BUCKET DE DESTINO PARA LA REPLICACION S3 ENTRE REGIONES
+      VersioningConfiguration: 
+        Status: Enabled ## IMPORTANTE: ACTIVAR EL VERSIONADO EN EL BUCKET DE DESTINO PARA HABILITAR LA REPLICACION S3 ENTRE REGIONES
+Outputs:
+  BucketName:
+    Value: !Ref BucketDestinoReplicacionS3
+    Description: Nombre del bucket de destino para la replicación S3

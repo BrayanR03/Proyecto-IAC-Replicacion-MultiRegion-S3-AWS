@@ -101,6 +101,8 @@ Resources:
 Outputs:
   RoleName:
     Value: !GetAtt RolReplicacionS3Cloudformation.Arn
+    Export:
+      Name: RoleArnExport ## 💡 EXPORTAMOS EL ARN DEL ROL IAM PARA SER UTILIZADO EN OTROS TEMPLATES (BUCKET S3 ORIGEN EN ESTE CASO)
 ## 💡 EN ESTE CASO, EXPORTAMOS EL ARN DEL ROL IAM (SOLO DE EJEMPLO, NO SERÁ UTILIZADO EN EL PROYECTO)
   
 

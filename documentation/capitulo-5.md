@@ -228,4 +228,4 @@ Y ahí es donde realmente empieza la complejidad arquitectónica de IaC. La difi
 
 Puedes revisar el ejemplo completo del template unificado utilizado en este capítulo en:
 
-🔗 GitHub: [Template-Unificado-Rol-Politica-IAM](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/blob/main/code/capitulo-4/template-rol-politica-iam.yml)
+🔗 GitHub: [Template-Unificado-Rol-Politica-IAM](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/blob/main/code/capitulo-5/template-rol-politica-iam.yml)
