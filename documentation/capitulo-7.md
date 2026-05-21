@@ -109,6 +109,7 @@ Esto nos permitirá comprender claramente:
 
 Acceder al script 💻: [Script-Despliegue-Replicacion-MultiRegional](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/blob/main/code/capitulo-7/deployment.sh)
 
+Acceder a preparación del Script antes del despliegue 💡: [Preparacion-Script](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/blob/main/code/capitulo-7/preparacion-script.md)
 
 ---
 
