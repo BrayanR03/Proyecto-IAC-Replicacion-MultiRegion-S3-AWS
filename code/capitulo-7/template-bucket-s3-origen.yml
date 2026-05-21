@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para S3 (Bucket origen) - Replicacion S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Replicacion S3 - MultiRegion
+
+Parameters:
+
+  BucketNameDestinoParameter:
+    Type: String
+    Default: bucket-brayan-destino-replicacion-cf
+
+  BucketNameOrigenParameter:
+    Type: String
+    Default: bucket-brayan-origen-replicacion-cf
+
+Resources:
+
+  BucketOrigenReplicacionS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketNameOrigenParameter
+      ReplicationConfiguration:
+        Role: !ImportValue RoleArnExport 
+        Rules:
+          - Id: Regla_01_Replicacion
+            Status: Enabled
+            Destination:
+              Bucket: !Sub 'arn:aws:s3:::${BucketNameDestinoParameter}'
+              StorageClass: STANDARD
+      VersioningConfiguration: 
+        Status: Enabled 

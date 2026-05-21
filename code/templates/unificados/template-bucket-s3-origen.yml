@@ -1,0 +1,49 @@
+## ==============================================================
+## SECCIONES OPCIONALES (✅ RECOMENDADO PARA DOCUMENTACION)
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para S3 (Bucket origen) - Replicacion S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Replicacion S3 - MultiRegion
+## ==============================================================
+
+## ==============================================================
+## SECCIONES OBLIGATORIAS (✅ REQUERIDO PARA LA CREACION DEL TEMPLATE)
+
+## ============PARAMETROS DEL TEMPLATE=======================================
+###💡 REQUERIDO SI SE DESEA PARAMETRIZAR EL TEMPLATE
+Parameters:
+
+  BucketNameDestinoParameter:
+    Type: String
+    Default: bucket-brayan-destino-replicacion-cf
+
+  BucketNameOrigenParameter:
+    Type: String
+    Default: bucket-brayan-origen-replicacion-cf
+
+### 💡 EN ESTE CASO, ESTABLECEMOS LOS VALORES REALES EN LA PROPIEDAD "Default
+## ==============================================================
+
+
+## ============RECURSOS DEL TEMPLATE=======================================
+###💡 REQUERIDO PARA LA CREACION DE LOS RECURSOS DE CADA SERVICIO EN AWS (BUCKET S3 EN ESTE TEMPLATE)
+
+Resources:
+
+## =============================================================
+## RECURSO DEL BUCKET S3 DE ORIGEN PARA LA REPLICACION S3 ENTRE REGIONES.
+  BucketOrigenReplicacionS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketNameOrigenParameter
+      ReplicationConfiguration: ## REGLAS DE REPLICACION S3 ENTRE REGIONES
+        Role: !ImportValue RoleArnExport ## IMPORTAMOS EL ARN DEL ROL IAM, EXPORTADO DESDE EL STACK DE IAM (TEMPLATE UNIFICADO DE POLITICA Y ROL IAM)
+        Rules:
+          - Id: Regla_01_Replicacion
+            Status: Enabled
+            Destination:
+              Bucket: !Sub 'arn:aws:s3:::${BucketNameDestinoParameter}' ## REFERENCIA AL BUCKET DE DESTINO PARA LA REPLICACION S3 ENTRE REGIONES
+              StorageClass: STANDARD
+      VersioningConfiguration: 
+        Status: Enabled ## IMPORTANTE: ACTIVAR EL VERSIONADO EN EL BUCKET DE ORIGEN PARA HABILITAR LA REPLICACION S3 ENTRE REGIONES
