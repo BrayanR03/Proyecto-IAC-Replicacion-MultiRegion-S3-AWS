@@ -4,6 +4,8 @@ Pues bien… este proyecto nace a partir de una idea que inicialmente compartí 
 
 Uno de los principales objetivos de este proyecto no fue únicamente comprender cómo funcionan los eventos en S3, sino también llevar toda esa configuración visual desde la consola de AWS hacia un enfoque completamente basado en Infrastructure as Code (IaC).
 
+[📝Post-Linkedin](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_aws-amazons3-awslambda-activity-7444752250196922369-hRgK?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8)
+
 ---
 
 ### ☁️ ¿POR QUÉ LOS EVENTOS EN S3 SON TAN IMPORTANTES?

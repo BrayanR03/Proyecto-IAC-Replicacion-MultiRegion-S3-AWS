@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template Servicio IAM - Mover Objectos S3 Lambda
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Mover Objetos S3 mediante AWS Lambda
+
+Parameters:
+  ManagedPolicyNameCloudWatchParameter:
+    Type: String
+    Description: Nombre de la politica IAM personalizada para Lambda (CloudWatch Logs).
+    Default: PoliticaPersonalizada-LambdaExecution-CloudWatchLogs
+  
+  ManagedPolicyNameS3Parameter:
+    Type: String
+    Description: Nombre de la politica IAM personalizada para Lambda (S3).
+    Default: PoliticaPersonalizada-LambdaExecution-S3
+
+  LambdaFunctionNameParameter:
+    Type: String
+    Description: Nombre de la funcion Lambda que utilizara esta politica.
+    Default: lambda-mover-objetos-brayan-cf
+  
+  RoleNameParameter:
+    Type: String
+    Description: Nombre del rol IAM para la funcion Lambda.
+    Default: RoleLambdaMoverObjetosS3-CF
+
+Resources:
+
+## POLTICAS IAM PERSONALIZADAS: POLITICA PARA CLOUDWATCH LOGS - LAMBDA
+
+  PoliticaPersonalizadaLambdaCloudWatchLogs:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Politica personalizada para la funcion Lambda (CloudWatch Logs).
+      ManagedPolicyName: !Ref ManagedPolicyNameCloudWatchParameter
+      Path: /
+      PolicyDocument: 
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:us-east-2:765951922888:*
+          - Effect: Allow
+            Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !Sub arn:aws:logs:us-east-2:765951922888:log-group:/aws/lambda/${LambdaFunctionNameParameter}:*
+
+## POLTICAS IAM PERSONALIZADAS: POLITICA PARA S3 - LAMBDA
+
+  PoliticaPersonalizadaLambdaS3:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Politica personalizada para la funcion Lambda (S3).
+      ManagedPolicyName: !Ref ManagedPolicyNameS3Parameter
+      Path: /
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: PermisosSobreObjetos
+            Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:DeleteObject
+              - s3:PutObject
+            Resource:
+              - arn:aws:s3:::bucket-origen-mover-objetos-s3-lambda/*
+              - arn:aws:s3:::bucket-destino-mover-objetos-s3-lambda/*
+          - Sid: PermisosSobreElBucket
+            Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource:
+              - arn:aws:s3:::bucket-origen-mover-objetos-s3-lambda
+              - arn:aws:s3:::bucket-destino-mover-objetos-s3-lambda
+
+
+## ROL IAM PARA LAMBDA 
+
+  RoleLambdaMoverObjetosS3:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Description: Rol IAM para la funcion Lambda que mueve objetos entre buckets S3.
+      ManagedPolicyArns: 
+        - !Ref PoliticaPersonalizadaLambdaCloudWatchLogs
+        - !Ref PoliticaPersonalizadaLambdaS3
+      MaxSessionDuration: 3600
+      Path: /
+      RoleName: !Ref RoleNameParameter
+
+## OUTPUTS: VALORES QUE SE EXPORTARAN PARA OTROS STACKS
+Outputs:
+  RoleName:
+    Value: !GetAtt RoleLambdaMoverObjetosS3.Arn
+    Export:
+      Name: ARNRoleLambdaMoverObjetosS3

@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::bucket-origen-mover-objetos-s3-lambda/*",
+                "arn:aws:s3:::bucket-destino-mover-objetos-s3-lambda/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "PermisosSobreObjetos"
+        },
+        {
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::bucket-origen-mover-objetos-s3-lambda",
+                "arn:aws:s3:::bucket-destino-mover-objetos-s3-lambda"
+            ],
+            "Effect": "Allow",
+            "Sid": "PermisosSobreElBucket"
+        }
+    ]
+}
