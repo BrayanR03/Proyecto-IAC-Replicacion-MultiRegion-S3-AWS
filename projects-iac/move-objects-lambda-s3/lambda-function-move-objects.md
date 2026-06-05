@@ -112,7 +112,7 @@ Y cada template representa una pieza específica del proyecto.
 
 Por ello, después de finalizar el template de IAM, el siguiente paso es construir:
 
-[`template-lambda.yml`](#)
+[`template-lambda.yml`](https://github.com/BrayanR03/Proyecto-IAC-Replicacion-MultiRegion-S3-AWS/blob/main/projects-iac/move-objects-lambda-s3/template/template-lambda.yml)
 
 ---
 
