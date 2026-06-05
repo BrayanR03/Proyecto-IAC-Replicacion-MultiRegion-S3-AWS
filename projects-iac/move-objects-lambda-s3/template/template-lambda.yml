@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda Function - Mover Objetos S3
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Mover Objetos S3 mediante AWS Lambda
+
+Parameters:
+
+  FunctionNameParameter:
+    Type: String
+    Default: lambda-mover-objetos-brayan-cf
+
+  BucketLambdaCodeParameter:
+    Type: String
+    Default: bucket-lambdas-code-brayan-747554529824-us-east-1-an
+
+  ZipCodeLambdaParameter:
+    Type: String
+    Default: lambda.zip
+
+  BucketS3ARNParameter:
+    Type: String
+    Default: arn:aws:s3:::origen-bucket-brayan-mover-objetos
+
+Resources:
+
+## RECURSO PARA DESPLEGAR LAMBDA FUNCTION
+  LambdaFunctionMoverObjetosS3:
+    Type: AWS::Lambda::Function
+    Properties:
+      Architectures: ## ARQUITECTURA DE LA LAMBDA FUNCTION
+        - x86_64
+      Code: 
+          S3Bucket: !Ref BucketLambdaCodeParameter ## BUCKET QUE ALMACENA EL CODIGO DE LA LAMBDA FUNCTION (previamente creado)
+          S3Key: !Ref ZipCodeLambdaParameter ## NOMBRE DEL ARCHIVO ZIP DEL CODIGO DE LA LAMBDA FUNCTION (previamente cargado)
+      Description: Lambda de Prueba desde CF
+      FunctionName: !Ref FunctionNameParameter
+      Handler: app.lambda_handler ## NOMBRE DEL ARCHIVO Y FUNCION PRINCIPAL DE LA LAMBDA FUNCTION
+      MemorySize: 128 ## MEMORIA DE LA LAMBDA FUNCTION
+      Role: !ImportValue ARNRoleLambdaMoverObjetosS3 ## ROL PARA LA LAMBDA FUNCTION
+      Runtime: python3.14 ## LENGUAJE DE PROGRAMACION PARA LA LAMBDA FUNCTION
+
+## RECURSO QUE PERMITIRÁ CREAR EL PERMISO PARA EL TRIGGER DE LA LAMBDA FUNCTION
+  TriggerLambdaMoverObjetosS3:
+    Type: AWS::Lambda::Permission
+    DependsOn: LambdaFunctionMoverObjetosS3 
+    Properties:
+      Action: lambda:InvokeFunction ## ACCION PARA INVOCAR LA LAMBDA FUNCTION
+      FunctionName: !Ref FunctionNameParameter
+      Principal: s3.amazonaws.com ## SERVICIO QUE ACTIVARA LA LAMBDA FUNCTION S3
+      SourceArn: !Ref BucketS3ARNParameter ## NOMBRE DEL BUCKET QUE ACCIONARA LA LAMBDA FUNCTION
+
+## OUTPUTS: VALORES QUE SE EXPORTARaN PARA OTROS STACKS
+Outputs:
+  LambdaFunctionName:
+    Value: !GetAtt LambdaFunctionMoverObjetosS3.Arn
+    Export:
+      Name: ARNLambdaMoverObjetosS3 ## EXPORTAMOS EL ARN DE LA LAMBDA FUNCTION

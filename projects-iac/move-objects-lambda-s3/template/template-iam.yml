@@ -40,13 +40,13 @@ Resources:
         Statement:
           - Effect: Allow
             Action: logs:CreateLogGroup
-            Resource: arn:aws:logs:us-east-2:765951922888:*
+            Resource: arn:aws:logs:us-east-1:747554529824:* ## TENER EN CUENTA LA REGION DONDE DESPLEGAREMOS Y EL NUMERO DE NUESTRA CUENTA DE AWS
           - Effect: Allow
             Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource:
-              - !Sub arn:aws:logs:us-east-2:765951922888:log-group:/aws/lambda/${LambdaFunctionNameParameter}:*
+              - !Sub arn:aws:logs:us-east-1:747554529824:log-group:/aws/lambda/${LambdaFunctionNameParameter}:* ## TENER EN CUENTA LA REGION DONDE DESPLEGAREMOS Y EL NUMERO DE NUESTRA CUENTA DE AWS
 
 ## POLTICAS IAM PERSONALIZADAS: POLITICA PARA S3 - LAMBDA
 
@@ -66,15 +66,15 @@ Resources:
               - s3:DeleteObject
               - s3:PutObject
             Resource:
-              - arn:aws:s3:::bucket-origen-mover-objetos-s3-lambda/*
-              - arn:aws:s3:::bucket-destino-mover-objetos-s3-lambda/*
+              - arn:aws:s3:::origen-bucket-brayan-mover-objetos/*
+              - arn:aws:s3:::destino-bucket-brayan-mover-objetos/*
           - Sid: PermisosSobreElBucket
             Effect: Allow
             Action:
               - s3:ListBucket
             Resource:
-              - arn:aws:s3:::bucket-origen-mover-objetos-s3-lambda
-              - arn:aws:s3:::bucket-destino-mover-objetos-s3-lambda
+              - arn:aws:s3:::origen-bucket-brayan-mover-objetos
+              - arn:aws:s3:::destino-bucket-brayan-mover-objetos
 
 
 ## ROL IAM PARA LAMBDA 
