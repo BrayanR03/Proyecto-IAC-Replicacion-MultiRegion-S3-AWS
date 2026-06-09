@@ -11,7 +11,7 @@ def lambda_handler(event, context):
     key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key']) ## Objeto
     
     # 2. Apuntamos el bucket de destino
-    target_bucket = 'bucket-destino-mover-objetos-s3-lambda' ## Nombre del bucket destino
+    target_bucket = 'destino-bucket-brayan-mover-objetos' ## Nombre del bucket destino
     copy_source = {'Bucket': source_bucket, 'Key': key} ## Dirección del bucket origen
     
     ## Encapsulamos lógica y manejamos excepciones

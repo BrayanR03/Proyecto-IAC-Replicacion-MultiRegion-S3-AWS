@@ -27,6 +27,7 @@ Parameters:
 
 Resources:
 
+## POLTICAS IAM PERSONALIZADAS: POLITICA PARA CLOUDWATCH LOGS - LAMBDA
 
   PoliticaPersonalizadaLambdaCloudWatchLogs:
     Type: AWS::IAM::ManagedPolicy
@@ -39,14 +40,15 @@ Resources:
         Statement:
           - Effect: Allow
             Action: logs:CreateLogGroup
-            Resource: arn:aws:logs:us-east-1:747554529824:* 
+            Resource: arn:aws:logs:us-east-1:747554529824:* ## TENER EN CUENTA LA REGION DONDE DESPLEGAREMOS Y EL NUMERO DE NUESTRA CUENTA DE AWS
           - Effect: Allow
             Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
             Resource:
-              - !Sub arn:aws:logs:us-east-1:747554529824:log-group:/aws/lambda/${LambdaFunctionNameParameter}:* 
+              - !Sub arn:aws:logs:us-east-1:747554529824:log-group:/aws/lambda/${LambdaFunctionNameParameter}:* ## TENER EN CUENTA LA REGION DONDE DESPLEGAREMOS Y EL NUMERO DE NUESTRA CUENTA DE AWS
 
+## POLTICAS IAM PERSONALIZADAS: POLITICA PARA S3 - LAMBDA
 
   PoliticaPersonalizadaLambdaS3:
     Type: AWS::IAM::ManagedPolicy
@@ -75,6 +77,7 @@ Resources:
               - arn:aws:s3:::destino-bucket-brayan-mover-objetos
 
 
+## ROL IAM PARA LAMBDA 
 
   RoleLambdaMoverObjetosS3:
     Type: AWS::IAM::Role
@@ -94,6 +97,7 @@ Resources:
       Path: /
       RoleName: !Ref RoleNameParameter
 
+## OUTPUTS: VALORES QUE SE EXPORTARAN PARA OTROS STACKS
 Outputs:
   RoleName:
     Value: !GetAtt RoleLambdaMoverObjetosS3.Arn

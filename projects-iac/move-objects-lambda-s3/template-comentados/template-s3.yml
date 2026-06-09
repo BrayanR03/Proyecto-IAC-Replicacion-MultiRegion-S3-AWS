@@ -16,6 +16,7 @@ Parameters:
 
 Resources:
   
+  ## BUCKET S3: BUCKET DE ORIGEN DE LOS OBJETOS QUE SE MOVERaN CON LAMBDA
   BucketOrigenMoverObjetosS3Lambda:
     Type: AWS::S3::Bucket
     Properties:
@@ -25,6 +26,7 @@ Resources:
           - Event: s3:ObjectCreated:Put
             Function: !ImportValue ARNLambdaMoverObjetosS3
   
+  ## BUCKET S3: BUCKET DE DESTINO DE LOS OBJETOS QUE SE MOVERaN CON LAMBDA
   BucketDestinoMoverObjetosS3Lambda:
     Type: AWS::S3::Bucket
     Properties:

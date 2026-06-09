@@ -24,35 +24,32 @@ Parameters:
 
 Resources:
 
-## RECURSO PARA DESPLEGAR LAMBDA FUNCTION
   LambdaFunctionMoverObjetosS3:
     Type: AWS::Lambda::Function
     Properties:
-      Architectures: ## ARQUITECTURA DE LA LAMBDA FUNCTION
+      Architectures: 
         - x86_64
       Code: 
-          S3Bucket: !Ref BucketLambdaCodeParameter ## BUCKET QUE ALMACENA EL CODIGO DE LA LAMBDA FUNCTION (previamente creado)
-          S3Key: !Ref ZipCodeLambdaParameter ## NOMBRE DEL ARCHIVO ZIP DEL CODIGO DE LA LAMBDA FUNCTION (previamente cargado)
+          S3Bucket: !Ref BucketLambdaCodeParameter 
+          S3Key: !Ref ZipCodeLambdaParameter 
       Description: Lambda de Prueba desde CF
       FunctionName: !Ref FunctionNameParameter
-      Handler: app.lambda_handler ## NOMBRE DEL ARCHIVO Y FUNCION PRINCIPAL DE LA LAMBDA FUNCTION
-      MemorySize: 128 ## MEMORIA DE LA LAMBDA FUNCTION
-      Role: !ImportValue ARNRoleLambdaMoverObjetosS3 ## ROL PARA LA LAMBDA FUNCTION
-      Runtime: python3.14 ## LENGUAJE DE PROGRAMACION PARA LA LAMBDA FUNCTION
+      Handler: app.lambda_handler 
+      MemorySize: 128 
+      Role: !ImportValue ARNRoleLambdaMoverObjetosS3 
+      Runtime: python3.14 
 
-## RECURSO QUE PERMITIRÁ CREAR EL PERMISO PARA EL TRIGGER DE LA LAMBDA FUNCTION
   TriggerLambdaMoverObjetosS3:
     Type: AWS::Lambda::Permission
     DependsOn: LambdaFunctionMoverObjetosS3 
     Properties:
-      Action: lambda:InvokeFunction ## ACCION PARA INVOCAR LA LAMBDA FUNCTION
+      Action: lambda:InvokeFunction 
       FunctionName: !Ref FunctionNameParameter
-      Principal: s3.amazonaws.com ## SERVICIO QUE ACTIVARA LA LAMBDA FUNCTION S3
-      SourceArn: !Ref BucketS3ARNParameter ## NOMBRE DEL BUCKET QUE ACCIONARA LA LAMBDA FUNCTION
+      Principal: s3.amazonaws.com 
+      SourceArn: !Ref BucketS3ARNParameter 
 
-## OUTPUTS: VALORES QUE SE EXPORTARaN PARA OTROS STACKS
 Outputs:
   LambdaFunctionName:
     Value: !GetAtt LambdaFunctionMoverObjetosS3.Arn
     Export:
-      Name: ARNLambdaMoverObjetosS3 ## EXPORTAMOS EL ARN DE LA LAMBDA FUNCTION
+      Name: ARNLambdaMoverObjetosS3 
