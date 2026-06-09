@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Lambda Function - Mover Objetos S3
+Description: Lambda Function - Mover Objectos S3 Lambda
 Metadata:
   Author: Brayan Neciosup
   Proyecto: Mover Objetos S3 mediante AWS Lambda

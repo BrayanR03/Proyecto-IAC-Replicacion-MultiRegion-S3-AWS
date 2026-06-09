@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template Bucket S3 - Mover Objectos S3 Lambda
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Mover Objetos S3 mediante AWS Lambda
+
+Parameters:
+  BucketOrigenNameParameter:
+    Type: String
+    Description: Nombre del bucket S3 de origen para mover objetos con Lambda.
+    Default: origen-bucket-brayan-mover-objetos
+  BucketDestinoNameParameter:
+    Type: String
+    Description: Nombre del bucket S3 de destino para mover objetos con Lambda.
+    Default: destino-bucket-brayan-mover-objetos
+
+Resources:
+  
+  ## BUCKET S3: BUCKET DE ORIGEN DE LOS OBJETOS QUE SE MOVERaN CON LAMBDA
+  BucketOrigenMoverObjetosS3Lambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketOrigenNameParameter
+      NotificationConfiguration: 
+        LambdaConfigurations: 
+          - Event: s3:ObjectCreated:Put
+            Function: !ImportValue ARNLambdaMoverObjetosS3
+  
+  ## BUCKET S3: BUCKET DE DESTINO DE LOS OBJETOS QUE SE MOVERaN CON LAMBDA
+  BucketDestinoMoverObjetosS3Lambda:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketDestinoNameParameter
+
+  
