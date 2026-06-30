@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template VPC para AWS
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Redes en AWS - IAC
+
+## PARAMETROS
+Parameters:
+  VPCNameParameter:
+    Type: String
+    Description: Nombre de la VPC
+    Default: VPC-Brayan-IaC-CF
+  CIDRBlockVPCParameter:
+    Type: String
+    Description: CIDR Block para la VPC
+    Default: 10.0.0.0/16 ## 65536 DIRECCIONES IP
+
+
+## RECURSOS
+Resources:
+  ResourceVPC:
+    Type: AWS::EC2::VPC ## CADA COMPONENTE DE AMAZON VPC, TENDRA EN SU TYPE: AWS::EC2:RecursoVPC (Porque VPC nacio en el ecosistema EC2)
+    Properties:
+      CidrBlock: !Ref CIDRBlockVPCParameter
+      EnableDnsHostnames: true ## HABILITAMOS LA ASIGNACION DE UN DNS A LAS FUTURAS INSTANCIAS EC2
+      EnableDnsSupport: true ## HABILITAMOS LA RESOLUCION DNS A LAS FUTURAS INSTANCIAS EC2
+      InstanceTenancy: default ## MANTENEMOS POR DEFECTO QUE LAS INSTANCIAS EC2 COMPARTAN HARDWARE FISICO DE AWS CON OTROS CLIENTES
+      Tags: 
+        - Key: Name
+          Value: !Ref VPCNameParameter
+
+## OUTPUTS
+Outputs:
+  VPCid:
+    Value: !Ref ResourceVPC ## VPC ID
+    Export:
+      Name: VPCidExport ## EXPORTAMOS LA VPC ID AL DESPLEGAR EL STACK EN COUDFORMATION
