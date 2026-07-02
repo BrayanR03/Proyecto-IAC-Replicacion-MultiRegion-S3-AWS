@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para crear subredes publicas y privadas
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Redes en AWS
+
+Parameters:
+  PublicSubnet1NameParameter:
+    Type: String
+    Description: Nombre de la subred publica 1
+    Default: Public-Subnet-1-Brayan-CF
+  PublicSubnet2NameParameter:
+    Type: String
+    Description: Nombre de la subred publica 2
+    Default: Public-Subnet-2-Brayan-CF
+
+  PrivateSubnet1NameParameter:
+    Type: String
+    Description: Nombre de la subred privada 1
+    Default: Private-Subnet-1-Brayan-CF
+  PrivateSubnet2NameParameter:
+    Type: String
+    Description: Nombre de la subred privada 2
+    Default: Private-Subnet-2-Brayan-CF
+  
+## SEGUIREMOS TRABAJANDO EN LA REGION DE NVIRGINIA  
+Resources:
+  PublicSubnet1Resource:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a ## ZONA DE DISPONIBILIDAD A
+      CidrBlock: 10.0.1.0/24 ## CIDR IPV4 DE SUBRED PUBLICA
+      MapPublicIpOnLaunch: true
+      Tags: 
+        - Key: Name
+          Value: !Ref PublicSubnet1NameParameter
+      VpcId: !ImportValue VPCidExport ## IMPORTAMOS VALOR DEL STACK VPC (VPC ID)
+  
+  PublicSubnet2Resource:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b ## ZONA DE DISPONIBILIDAD B
+      CidrBlock: 10.0.100.0/24 ## CIDR IPV4 DE SUBRED PUBLICA
+      MapPublicIpOnLaunch: true
+      Tags: 
+        - Key: Name
+          Value: !Ref PublicSubnet2NameParameter
+      VpcId: !ImportValue VPCidExport ## IMPORTAMOS VALOR DEL STACK VPC (VPC ID)
+
+  PrivateSubnet1Resource:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a ## ZONA DE DISPONIBILIDAD A
+      CidrBlock: 10.0.2.0/24 ## CIDR IPV4 DE SUBRED PRIVADA
+      MapPublicIpOnLaunch: false
+      Tags: 
+        - Key: Name
+          Value: !Ref PrivateSubnet1NameParameter
+      VpcId: !ImportValue VPCidExport ## IMPORTAMOS VALOR DEL STACK VPC (VPC ID)
+  
+  PrivateSubnet2Resource:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b ## ZONA DE DISPONIBILIDAD B
+      CidrBlock: 10.0.200.0/24 ## CIDR IPV4 DE SUBRED PRIVADA
+      MapPublicIpOnLaunch: false
+      Tags: 
+        - Key: Name
+          Value: !Ref PrivateSubnet2NameParameter 
+      VpcId: !ImportValue VPCidExport ## IMPORTAMOS VALOR DEL STACK VPC (VPC ID)
+
+
+Outputs:
+  SubnetPublic1ID:
+    Value: !Ref PublicSubnet1Resource
+    Export: 
+      Name: SubnetPublic1IDExport ## EXPORTAMOS ID DE SUBNET PUBLICA 1
+  SubnetPublic2ID:
+    Value: !Ref PublicSubnet2Resource
+    Export: 
+      Name: SubnetPublic2IDExport ## EXPORTAMOS ID DE SUBNET PUBLICA 2
+  SubnetPrivate1ID:
+    Value: !Ref PrivateSubnet1Resource
+    Export: 
+      Name: SubnetPrivate1IDExport ## EXPORTAMOS ID DE SUBNET PRIVADA 1
+  SubnetPrivate2ID:
+    Value: !Ref PrivateSubnet2Resource
+    Export: 
+      Name: SubnetPrivate2IDExport ## EXPORTAMOS ID DE SUBNET PRIVADA 2

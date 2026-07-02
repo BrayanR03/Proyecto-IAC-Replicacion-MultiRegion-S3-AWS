@@ -67,6 +67,7 @@ Cada capítulo introduce una nueva idea dentro de IaC:
 | 11 | Lambda + S3 : Mover objetos-Parte 4 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-11-lambda-s3-mover-objetos-parte-4) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_aws-amazons3-awslambda-share-7469956195047436288-w6Pi/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
 | 12 | IaC + Networking : Parte 1 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/cap%C3%ADtulo-12-iac-networking-en-aws-parte-1) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-12-iac-networking-en-aws-share-7476420741404733440-nhk6/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
 | 13 | IaC + Networking : Parte 2 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/capítulo-13-iac-networking-en-aws-parte-2) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-13-iac-networking-en-aws-share-7477712513514713088-yyJU/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
+| 14 | IaC + Networking : Parte 2 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/capítulo-14-iac-networking-en-aws-parte-3) · [LinkedIn]() |
 
 ---
 
