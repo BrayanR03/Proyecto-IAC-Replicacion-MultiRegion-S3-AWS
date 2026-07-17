@@ -23,12 +23,12 @@ Parameters:
     Description: Nombre de la subred privada 2
     Default: Private-Subnet-2-Brayan-CF
   
-## SEGUIREMOS TRABAJANDO EN LA REGION DE NVIRGINIA  
+## TRABAJAREMOS EN LA REGION DE OREGON  
 Resources:
   PublicSubnet1Resource:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: us-east-1a ## ZONA DE DISPONIBILIDAD A
+      AvailabilityZone: us-west-2a ## ZONA DE DISPONIBILIDAD A
       CidrBlock: 10.0.1.0/24 ## CIDR IPV4 DE SUBRED PUBLICA
       MapPublicIpOnLaunch: true
       Tags: 
@@ -39,7 +39,7 @@ Resources:
   PublicSubnet2Resource:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: us-east-1b ## ZONA DE DISPONIBILIDAD B
+      AvailabilityZone: us-west-2b ## ZONA DE DISPONIBILIDAD B
       CidrBlock: 10.0.100.0/24 ## CIDR IPV4 DE SUBRED PUBLICA
       MapPublicIpOnLaunch: true
       Tags: 
@@ -50,7 +50,7 @@ Resources:
   PrivateSubnet1Resource:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: us-east-1a ## ZONA DE DISPONIBILIDAD A
+      AvailabilityZone: us-west-2a ## ZONA DE DISPONIBILIDAD A
       CidrBlock: 10.0.2.0/24 ## CIDR IPV4 DE SUBRED PRIVADA
       MapPublicIpOnLaunch: false
       Tags: 
@@ -61,7 +61,7 @@ Resources:
   PrivateSubnet2Resource:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: us-east-1b ## ZONA DE DISPONIBILIDAD B
+      AvailabilityZone: us-west-2b ## ZONA DE DISPONIBILIDAD B
       CidrBlock: 10.0.200.0/24 ## CIDR IPV4 DE SUBRED PRIVADA
       MapPublicIpOnLaunch: false
       Tags: 

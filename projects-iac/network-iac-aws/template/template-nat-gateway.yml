@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para crear NAT Gateway para las subredes privadas
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Redes en AWS
+
+Parameters:
+  NatGatewayNameParameter:
+    Type: String
+    Description: Nombre del NAT Gateway
+    Default: NAT-Gateway-Brayan-CF
+
+Resources:
+
+  ElasticIPNatGatewayResource: ## RECURSO PARA CREAR LA IP ELASTICA
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc ## CONEXION A LA VPC DE AWS
+      Tags: 
+        - Key: Name
+          Value: Elastic-IP-NAT-Gateway-Brayan-CF
+
+  NatGatewayResource: ## RECURSO PARA CREAR EL NAT GATEWAY
+    Type: AWS::EC2::NatGateway
+    DependsOn: ElasticIPNatGatewayResource ## DEPENDENCIA DEL RECURSO DE LA IP ELASTICA
+    Properties:
+      AllocationId: !GetAtt ElasticIPNatGatewayResource.AllocationId ## ID DE LA IP ELASTICA CREADA PREVIAMENTE
+      AvailabilityMode: zonal ## DISPONIBILIDAD DEL NAT GATEWAY
+      ConnectivityType: public ## TIPO DE CONECTIVIDAD DEL NAT GATEWAY
+      MaxDrainDurationSeconds: 350 ## TIEMPO MAXIMO DE DRENAJE DEL NAT GATEWAY
+      SubnetId: !ImportValue SubnetPublic1IDExport ## ID DE LA SUBRED PUBLICA DONDE SE CREARA EL NAT GATEWAY
+      Tags: 
+        - Key: Name
+          Value: !Ref NatGatewayNameParameter
+Outputs:
+  NatGatewayID:
+    Value: !Ref NatGatewayResource
+    Export: 
+      Name: NatGatewayIDExport ## EXPORTAMOS EL ID DEL NAT GATEWAY
