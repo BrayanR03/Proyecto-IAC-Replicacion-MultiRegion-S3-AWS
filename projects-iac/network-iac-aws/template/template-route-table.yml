@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para crear Route Tables 
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Redes en AWS
+
+
+Parameters:
+  RouteTablePublicNameParameter:
+    Type: String
+    Description: Nombre de la Route Table Publica
+    Default: RouteTablePublic-Brayan-CF
+  
+  RouteTablePrivateNameParameter:
+    Type: String
+    Description: Nombre de la Route Table Privada
+    Default: RouteTablePrivate-Brayan-CF
+  
+
+Resources:
+
+## ======== ROUTE TABLE PARA SUB REDES PUBLICAS
+  RouteTablePublicResource: ## RECURSO PARA CREAR ROUTE TABLE
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: !Ref RouteTablePublicNameParameter
+      VpcId: !ImportValue VPCidExport
+  
+  RouteTablePublicAssociationPublicSubNet1Resource: ## RECURSO PARA ASOCIAR ROUTE TABLE A SUB RED PUBLICA 1
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn: RouteTablePublicResource
+    Properties:
+      RouteTableId: !Ref RouteTablePublicResource
+      SubnetId: !ImportValue SubnetPublic1IDExport
+
+  RouteTablePublicAssociationPublicSubNet2Resource: ## RECURSO PARA ASOCIAR ROUTE TABLE A SUB RED PUBLICA 2
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn: RouteTablePublicResource
+    Properties:
+      RouteTableId: !Ref RouteTablePublicResource
+      SubnetId: !ImportValue SubnetPublic2IDExport
+
+  RouteTablePublicRoute01Resource: ## RECURSO PARA CREAR RUTA PARA EL TRAFICO DE INTERNET EN LAS SUBREDES PUBLICAS
+    Type: AWS::EC2::Route
+    DependsOn: RouteTablePublicResource
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0 ## DESTINO DEL TRAFICO (IPV4)
+      GatewayId: !ImportValue InternetGatewayIdExport ## TARGET (INTERNET GATEWAY)
+      RouteTableId: !Ref RouteTablePublicResource ## OBLIGATORIO (ID DE LA ROUTE TABLE)
+
+
+## ======== ROUTE TABLE PARA SUB REDES PRIVADAS
+  RouteTablePrivateResource: ## RECURSO PARA CREAR ROUTE TABLE
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: !Ref RouteTablePrivateNameParameter
+      VpcId: !ImportValue VPCidExport
+
+  RouteTablePrivateAssociationPrivateSubNet1Resource: ## RECURSO PARA ASOCIAR ROUTE TABLE A SUB RED PRIVADA 1
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn: RouteTablePrivateResource
+    Properties:
+      RouteTableId: !Ref RouteTablePrivateResource
+      SubnetId: !ImportValue SubnetPrivate1IDExport
+  
+  RouteTablePrivateAssociationPrivateSubNet2Resource: ## RECURSO PARA ASOCIAR ROUTE TABLE A SUB RED PRIVADA 2
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn: RouteTablePrivateResource
+    Properties:
+      RouteTableId: !Ref RouteTablePrivateResource
+      SubnetId: !ImportValue SubnetPrivate2IDExport
+
+
+  RouteTablePrivateRoute01Resource: ## RECURSO PARA CREAR RUTA PARA EL TRAFICO DE INTERNET EN LAS SUBREDES PRIVADAS
+    Type: AWS::EC2::Route
+    DependsOn: RouteTablePrivateResource
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0 ## DESTINO DEL TRAFICO (IPV4)
+      NatGatewayId: !ImportValue NatGatewayIDExport ## TARGET (NAT GATEWAY)
+      RouteTableId: !Ref RouteTablePrivateResource ## OBLIGATORIO (ID DE LA ROUTE TABLE)
+Outputs:
+  RouteTablePublicId:
+    Value: !Ref RouteTablePublicResource
+    Export:
+      Name: RouteTablePublicIdExport
+
+  RouteTablePrivateId:
+    Value: !Ref RouteTablePrivateResource
+    Export:
+      Name: RouteTablePrivateIdExport
