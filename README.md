@@ -71,6 +71,8 @@ Cada capítulo introduce una nueva idea dentro de IaC:
 | 15 | IaC + Networking : Parte 4 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/capítulo-15-iac-networking-en-aws-parte-4) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-15-iac-networking-en-aws-share-7480612437105315841-5SiU/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
 | 16 | IaC + Networking : Parte 5 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/capítulo-16-iac-networking-en-aws-parte-5) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-16-iac-networking-en-aws-activity-7483889546649223168--u9B?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
 | 17 | IaC + Networking : Parte 6 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/capítulo-17-iac-networking-en-aws-parte-6) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-17-iac-networking-en-aws-share-7485336165273747456-nKHH/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
+| 18 | IaC + Networking : Parte 7 | ✅ Completado | [Leer en Wix](https://bryanneciosup626.wixsite.com/brayandataanalitics/post/capítulo-18-iac-networking-en-aws-parte-7) · [LinkedIn](https://www.linkedin.com/posts/brayan-rafael-neciosup-bola%C3%B1os-407a59246_cap%C3%ADtulo-18-iac-networking-en-aws-activity-7486058700147941376-yIYN?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD0GLAcBWgj1gDgGQecSyD8Ue9xrnAoNcp8) |
+
 ---
 
 

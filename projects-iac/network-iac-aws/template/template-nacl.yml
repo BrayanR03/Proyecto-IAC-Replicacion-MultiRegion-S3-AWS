@@ -1,0 +1,130 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template Network ACL
+Metadata:
+  Author: Brayan Neciosup
+  Proyecto: Redes en AWS
+
+Parameters:
+
+  NACLPublicNameParameter:
+    Type: String
+    Description: Nombre del NACL Publico
+    Default: NACL-Public-Brayan-CF
+
+  NACLPrivateNameParameter:
+    Type: String
+    Description: Nombre del NACL Privado
+    Default: NACL-Private-Brayan-CF
+
+Resources:
+
+## ==== NACL Publico ====
+
+  NACLPublicResource: ## RECURSO PARA CREAR EL NACL PUBLICO
+    Type: AWS::EC2::NetworkAcl
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: !Ref NACLPublicNameParameter
+      VpcId: !ImportValue VPCidExport
+
+
+  NACLPublicAssociationPublicSubnet1Resource: ## RECURSO PARA ASOCIAR EL NACL PUBLICO A LA SUBNET PUBLICA 1
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    DependsOn: NACLPublicResource
+    Properties:
+      NetworkAclId: !Ref NACLPublicResource
+      SubnetId: !ImportValue SubnetPublic1IDExport
+
+  NACLPublicAssociationPublicSubnet2Resource: ## RECURSO PARA ASOCIAR EL NACL PUBLICO A LA SUBNET PUBLICA 2
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    DependsOn: NACLPublicResource
+    Properties:
+      NetworkAclId: !Ref NACLPublicResource
+      SubnetId: !ImportValue SubnetPublic2IDExport
+
+
+  NACLPublicInboundRule01AllTrafic: ## RECURSO PARA CREAR LA REGLA DE ENTRADA 01 PARA ACEPTAR TODO TRAFICO ENTRANTE
+    Type: AWS::EC2::NetworkAclEntry
+    DependsOn: NACLPublicResource
+    Properties:
+      CidrBlock: 0.0.0.0/0
+      Egress: false ## PORQUE ES UNA REGLA DE ENTRADA
+      NetworkAclId: !Ref NACLPublicResource
+      Protocol: -1 ## -1 PARA ACEPTAR TODOS LOS PROTOCOLOS
+      RuleAction: allow
+      RuleNumber: 100
+
+  NACLPublicOutboundRule01AllTrafic: ## RECURSO PARA CREAR LA REGLA DE SALIDA 01 PARA ACEPTAR TODO TRAFICO SALIENTE
+    Type: AWS::EC2::NetworkAclEntry
+    DependsOn: NACLPublicResource
+    Properties:
+      CidrBlock: 0.0.0.0/0
+      Egress: true ## PORQUE ES UNA REGLA DE SALIDA
+      NetworkAclId: !Ref NACLPublicResource
+      Protocol: -1 ## -1 PARA ACEPTAR TODOS LOS PROTOCOLOS
+      RuleAction: allow
+      RuleNumber: 100
+
+
+## ==== NACL Privado ====
+  NACLPrivateResource: ## RECURSO PARA CREAR EL NACL PRIVADO
+    Type: AWS::EC2::NetworkAcl
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: !Ref NACLPrivateNameParameter
+      VpcId: !ImportValue VPCidExport
+
+  NACLPrivateAssociationPrivateSubnet1Resource: ## RECURSO PARA ASOCIAR EL NACL PRIVADO A LA SUBNET PRIVADA 1
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    DependsOn: NACLPrivateResource
+    Properties:
+      NetworkAclId: !Ref NACLPrivateResource
+      SubnetId: !ImportValue SubnetPrivate1IDExport
+
+  NACLPrivateAssociationPrivateSubnet2Resource: ## RECURSO PARA ASOCIAR EL NACL PRIVADO A LA SUBNET PRIVADA 2
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    DependsOn: NACLPrivateResource
+    Properties:
+      NetworkAclId: !Ref NACLPrivateResource
+      SubnetId: !ImportValue SubnetPrivate2IDExport
+  
+
+  NACLPrivateInboundRule01MYSQL: ## RECURSO PARA CREAR LA REGLA DE ENTRADA 01 PARA ACEPTAR TRAFICO MYSQL ENTRANTE
+    Type: AWS::EC2::NetworkAclEntry
+    DependsOn: NACLPrivateResource
+    Properties:
+      CidrBlock: 10.0.0.0/16 ## CIDR DE LA VPC GENERAL (PERMITIRÁ TODAS LAS IPs DENTRO DE LA VPC)
+      Egress: false ## PORQUE ES UNA REGLA DE ENTRADA
+      NetworkAclId: !Ref NACLPrivateResource
+      PortRange: 
+        From: 3306
+        To: 3306
+      Protocol: 6 ## TCP
+      RuleAction: allow
+      RuleNumber: 100
+  
+  NACLPrivateOutboundRule01AllTrafic: ## RECURSO PARA CREAR LA REGLA DE SALIDA 01 PARA ACEPTAR TODO TRAFICO SALIENTE
+    Type: AWS::EC2::NetworkAclEntry
+    DependsOn: NACLPrivateResource
+    Properties:
+      CidrBlock: 0.0.0.0/0
+      Egress: true ## PORQUE ES UNA REGLA DE SALIDA
+      NetworkAclId: !Ref NACLPrivateResource
+      Protocol: -1 ## -1 PARA ACEPTAR TODOS LOS PROTOCOLOS
+      RuleAction: allow
+      RuleNumber: 100
+
+Outputs:
+  NACLPublicIDOutput:
+    Description: ID del NACL Publico
+    Value: !Ref NACLPublicResource
+    Export:
+      Name: NACLPublicIDExport
+
+  NACLPrivateIDOutput:
+    Description: ID del NACL Privado
+    Value: !Ref NACLPrivateResource
+    Export:
+      Name: NACLPrivateIDExport
